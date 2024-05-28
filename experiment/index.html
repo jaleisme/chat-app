@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.12/draggable.bundle.js"></script>
+    <div class="menu-container">
+        <ul class="menu">
+            <li class="submenu submenu_handle" service-id="1">
+            <span>one</span>
+            </li>
+            <li class="submenu submenu_handle" serviceId="2">
+            <span>two</span>
+            </li>
+            <li class="submenu submenu_handle" serviceId="3">
+            <span>three</span>
+            </li>
+            <li class="submenu submenu_handle" serviceId="4">
+            <span>four</span>
+            </li>
+            <li class="submenu submenu_handle" serviceId="5">
+            <span>five</span>
+            </li>
+            <li class="submenu submenu_handle" serviceId="6">
+            <span>six</span>
+            </li>
+            <li class="submenu submenu_handle" serviceId="7">
+            <span>seven</span>
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            var sortable = new Draggable.Sortable(document.querySelectorAll(".menu"), {
+            draggable: ".submenu",
+            handle: ".submenu_handle",
+            swapAnimation: {
+                duration: 200,
+                horizontal: true
+            },
+            plugins: [Draggable.Plugins.SwapAnimation]
+            })
+            $('.submenu').click(() => {alert('asad')})
+        });
+    </script>
+</body>
+</html>
