@@ -21,14 +21,10 @@ const Login = () => {
     React.useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if(user){
+                if(user.emailVerified){
+                    navigate('/verify');
+                }
                 navigate('/');
-                // if(user.emailVerified){
-                //     navigate('/');
-
-                // } else {
-                //     navigate('/verify');
-                //     signOut(user);
-                // }
             }
         })
     })

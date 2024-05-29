@@ -1,30 +1,21 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import { auth, database, firestore, storage } from "../lib/firebase.lib";
-import { onAuthStateChanged } from "firebase/auth";
+import { auth, database, storage } from "../lib/firebase.lib";
 import { FiPaperclip } from "react-icons/fi"
-import { useNavigate } from "react-router-dom";
 import { onValue, set, ref } from "firebase/database";
 import { v4 as uuid } from 'uuid';
-import { getDoc, doc } from "firebase/firestore";
 import { uploadBytes, ref as storageRef, getDownloadURL } from "firebase/storage";
 import prettyBytes from "pretty-bytes";
 
-const Chat = () => {
-    const [user, setUser] = React.useState({});
+// import { onAuthStateChanged } from "firebase/auth";
+// import { useNavigate } from "react-router-dom";
+// import { getDoc, doc } from "firebase/firestore";
+
+const Chat = ({user}) => {
     const [chats, setChats] = React.useState([]);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     React.useEffect(() => {
-        onAuthStateChanged(auth, async (user) => {
-            if(!user){
-                navigate('/login');
-            } else {
-                const userId = user.uid;
-                const firestoreRef = doc(firestore, 'users', userId);
-                const snapshot = await getDoc(firestoreRef);
-                setUser(snapshot.data());
-            }
-        });
         onValue(ref(database, "chats"), (snapshot) => {
             if(snapshot?.toJSON()){
                 const data = Object.values(snapshot.toJSON());
@@ -34,6 +25,7 @@ const Chat = () => {
                 setChats([]);
             }
         });
+        // console.log(user)
     }, []);
 
     const chatContainer = React.useRef()
@@ -125,7 +117,7 @@ const Chat = () => {
     
     return (
         <div className="flex h-screen flex-col">
-            <div ref={chatContainer} className="flex-1 flex flex-col bg-[url('/bg.png')] p-2 gap-2">
+            <div ref={chatContainer} className="flex-1 flex flex-col bg-slate-900 p-2 gap-2">
                 {/* <div role="alert" className="alert">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-info shrink-0 w-6 h-6"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span>12 unread messages. Tap to see.</span>
@@ -135,7 +127,7 @@ const Chat = () => {
                         if(chat.senderId === auth.currentUser.uid) {
                             return (
                                 <div key={chat.id} className="chat chat-end w-full">
-                                    <div className="chat-bubble bg-gray-800 p-3 max-w-[80%] flex flex-col gap-1">
+                                    <div className="chat-bubble bg-slate-800 p-3 max-w-[80%] flex flex-col gap-1">
                                         <span className="font-bold text-sky-500 text-xs">You</span>
                                         <div className="flex gap-2 items-end">
                                             {chat.message && <p className="text-sm w-full">{chat.message}</p>}
@@ -158,7 +150,7 @@ const Chat = () => {
                         } else {
                             return (
                                 <div key={chat.id} className="chat chat-start w-full">
-                                    <div className="chat-bubble bg-gray-800 p-3 max-w-[80%] flex flex-col gap-1">
+                                    <div className="chat-bubble bg-slate-800 p-3 max-w-[80%] flex flex-col gap-1">
                                         <span className="font-bold text-rose-500 text-xs">{chat.senderName}</span>
                                         <div className="flex gap-2 items-end">
                                             {chat.message && <p className="text-sm w-full">{chat.message}</p>}
@@ -182,10 +174,10 @@ const Chat = () => {
                     })
                 }
             </div>
-            <div className="bg-white sticky bottom-0 w-full min-h-fit px-4 py-2 z-20">
+            <div className="bg-slate-900 sticky bottom-0 w-full min-h-fit px-4 py-2 z-20">
                 <form onSubmit={sendMessage} className="flex gap-2">
-                    <label htmlFor="" className="flex flex-1 justify-between input input-bordered w-full py-1 px-2">
-                        <textarea name="message" placeholder="Type here..." className="w-full text-sm outline-none h-full py-2"></textarea>
+                    <label htmlFor="" className="flex flex-1 justify-between input input-bordered w-full py-1 px-2 bg-slate-900 text-white">
+                        <textarea name="message" placeholder="Type here..." className="w-full text-sm outline-none h-full py-2 bg-slate-900 text-white"></textarea>
                         <label htmlFor="fileUpload" className="h-full flex items-center">
                             <FiPaperclip />
                             <input type="file" className="hidden" onChange={uploadFile} id="fileUpload" />
