@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "ai": "^3.1.26",
     "axios": "^1.7.2",
     "firebase": "^10.12.1",
     "pretty-bytes": "^6.1.1",
@@ -32,6 +33,6 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
-    "vite": "^5.2.0"
+    "vite": "^5.2.12"
   }
 }
